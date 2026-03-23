@@ -20,7 +20,7 @@
             background: linear-gradient(135deg, #fff5f5 0%, #fed7e2 100%);
         }
 
-        /* Contenedor de la carta */
+        /* Contenedor de la carta estilo moderno */
         .envelope {
             background: white;
             border-radius: 20px;
@@ -55,7 +55,7 @@
             margin-bottom: 30px;
         }
 
-        /* El Botón Especial */
+        /* Botón de acción */
         .btn-talk {
             background: #be185d;
             color: white;
@@ -67,6 +67,7 @@
             cursor: pointer;
             box-shadow: 0 10px 20px rgba(190, 24, 93, 0.3);
             transition: all 0.3s ease;
+            outline: none;
         }
 
         .btn-talk:hover {
@@ -74,7 +75,7 @@
             background: #9d174d;
         }
 
-        /* Contenido Oculto que aparece después */
+        /* Contenido Oculto */
         #hidden-content {
             display: none;
             opacity: 0;
@@ -88,18 +89,19 @@
             font-weight: 500;
         }
 
-        /* Corazones flotantes */
+        /* Configuración de las partículas flotantes */
         .heart {
             position: absolute;
             pointer-events: none;
             z-index: 5;
-            animation: float 4s ease-in forwards;
+            top: 100vh;
+            animation: float linear forwards;
         }
 
         @keyframes float {
             0% { transform: translateY(0) rotate(0deg) scale(0); opacity: 0; }
             20% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1.5); opacity: 0; }
         }
     </style>
 </head>
@@ -134,14 +136,14 @@
             const hidden = document.getElementById('hidden-content');
             const card = document.getElementById('mainCard');
 
-            // Efecto de desvanecimiento
+            // Ocultar vista inicial
             initial.style.opacity = '0';
             
             setTimeout(() => {
                 initial.style.display = 'none';
                 hidden.style.display = 'block';
                 
-                // Animación de entrada del nuevo texto
+                // Mostrar vista oculta con animación
                 setTimeout(() => {
                     hidden.style.opacity = '1';
                     hidden.style.transform = 'translateY(0)';
@@ -149,9 +151,9 @@
                     card.style.boxShadow = '0 20px 60px rgba(190, 24, 93, 0.2)';
                 }, 50);
 
-                // Lluvia de corazones y flores
+                // Iniciar lluvia de corazones y flores
                 for(let i = 0; i < 50; i++) {
-                    setTimeout(createParticle, i * 100);
+                    setTimeout(createParticle, i * 120);
                 }
             }, 500);
         }
@@ -159,19 +161,27 @@
         function createParticle() {
             const particle = document.createElement('div');
             particle.classList.add('heart');
-            const types = ['❤️', '🌸', '💖', '✨'];
+            
+            const types = ['❤️', '🌸', '💖', '✨', '💕'];
             particle.innerHTML = types[Math.floor(Math.random() * types.length)];
             
+            // Posición horizontal aleatoria
             particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.top = '100vh';
-            particle.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            particle.style.duration = (Math.random() * 2 + 3) + 's';
+            
+            // Tamaño aleatorio
+            const size = Math.random() * 20 + 15;
+            particle.style.fontSizeparticle = size + 'px';
+            
+            // Duración de la animación aleatoria entre 3 y 6 segundos
+            const duration = Math.random() * 3 + 3;
+            particle.style.animationDuration = duration + 's';
             
             document.body.appendChild(particle);
 
+            // Eliminar del DOM para no sobrecargar el navegador
             setTimeout(() => {
                 particle.remove();
-            }, 5000);
+            }, duration * 1000);
         }
     </script>
 
