@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Samanta</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7e2 100%);
+        }
+
+        /* Contenedor de la carta */
+        .envelope {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #fee2e2;
+        }
+
+        .icon-mail {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #be185d;
+            font-size: 35px;
+            margin: 0 0 15px 0;
+        }
+
+        p {
+            color: #4b5563;
+            line-height: 1.6;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* El Botón Especial */
+        .btn-talk {
+            background: #be185d;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(190, 24, 93, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-talk:hover {
+            transform: scale(1.05);
+            background: #9d174d;
+        }
+
+        /* Contenido Oculto que aparece después */
+        #hidden-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .special-text {
+            font-style: italic;
+            color: #be185d;
+            font-weight: 500;
+        }
+
+        /* Corazones flotantes */
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            animation: float 4s ease-in forwards;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope" id="mainCard">
+        <div id="initial-view">
+            <span class="icon-mail">🌸</span>
+            <h1>Hola, Samanta</h1>
+            <p>
+                Sé que ahora no quieres hablar y respeto tu espacio, pero me duele no haber podido explicarte bien las cosas. Eres muy importante para mí y no quiero que el silencio sea el final de nuestra historia.
+            </p>
+            <button class="btn-talk" onclick="revealMessage()">¿Podemos hablar, por favor?</button>
+        </div>
+
+        <div id="hidden-content">
+            <h1>Gracias por leer esto...</h1>
+            <p>
+                No busco presionarte, solo quiero una oportunidad para que me escuches con el corazón. 
+                <br><br>
+                <span class="special-text">"Cada minuto sin hablar contigo se siente como un siglo."</span>
+                <br><br>
+                Estaré esperando cuando estés lista. Te quiero mucho.
+            </p>
+            <div style="font-size: 30px;">✉️✨</div>
+        </div>
+    </div>
+
+    <script>
+        function revealMessage() {
+            const initial = document.getElementById('initial-view');
+            const hidden = document.getElementById('hidden-content');
+            const card = document.getElementById('mainCard');
+
+            // Efecto de desvanecimiento
+            initial.style.opacity = '0';
+            
+            setTimeout(() => {
+                initial.style.display = 'none';
+                hidden.style.display = 'block';
+                
+                // Animación de entrada del nuevo texto
+                setTimeout(() => {
+                    hidden.style.opacity = '1';
+                    hidden.style.transform = 'translateY(0)';
+                    card.style.borderColor = '#f472b6';
+                    card.style.boxShadow = '0 20px 60px rgba(190, 24, 93, 0.2)';
+                }, 50);
+
+                // Lluvia de corazones y flores
+                for(let i = 0; i < 50; i++) {
+                    setTimeout(createParticle, i * 100);
+                }
+            }, 500);
+        }
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('heart');
+            const types = ['❤️', '🌸', '💖', '✨'];
+            particle.innerHTML = types[Math.floor(Math.random() * types.length)];
+            
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = '100vh';
+            particle.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            particle.style.duration = (Math.random() * 2 + 3) + 's';
+            
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
